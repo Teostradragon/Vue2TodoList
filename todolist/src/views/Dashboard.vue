@@ -2,7 +2,7 @@
   <div class="dashboard">
     <h1 class="subheading grey--text">Dashboard</h1>
 
-    <!--弹窗  所有得变量都 需要 定义-->
+    <!--这部分是点击ADD project之后的Popup弹窗-->
     <v-dialog v-model="test" max-width="600px">
       <v-card>
         <v-card-title>
@@ -18,7 +18,7 @@
               prepend-icon="edit"
             >
             </v-textarea>
-
+            <!--鼠标移出事件  失焦-->
             <v-menu max-width="290">
               <template v-slot:activator="{ on }">
                 <v-text-field
@@ -32,7 +32,7 @@
               <v-date-picker v-model="due"></v-date-picker>
             </v-menu>
 
-            <v-btn text class="primary mx-0 mt-3" @click="baocun"
+            <v-btn text class="primary mx-0 mt-3" @click="postProjectsList"
               >Add project</v-btn
             >
           </v-form>
@@ -40,7 +40,10 @@
       </v-card>
     </v-dialog>
 
-    <v-btn @click="opendialog" class="success">Add new project</v-btn>
+    <!--openDialog是Dashboard页面的添加按钮之后dialog-->
+    <v-btn @click="openDialog" class="success">Add new project</v-btn>
+
+    <!-- 点击Sorts projects by name按照项目名排列-->
     <v-container class="my-5">
       <v-row class="mb-3">
         <v-tooltip top>
@@ -53,6 +56,7 @@
           <span>Sorts projects by name</span>
         </v-tooltip>
 
+        <!-- 点击Sorts projects By person按照人名排列-->
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <v-btn small text color="grey" @click="sortBy('person')" v-on="on">
@@ -64,8 +68,9 @@
         </v-tooltip>
       </v-row>
 
+      <!-- 显示title，person，due date的内容，projects-->
       <v-card text tile class="px-3" v-for="item in projects" :key="item.id">
-        <v-row>
+        <v-row align="center" justify="space-around">
           <v-col cols="12" md="6" :class="`pl-3 project ${item.status}`">
             <div class="caption grey--text">Project Title</div>
             <div>{{ item.title }}</div>
@@ -80,7 +85,6 @@
           </v-col>
           <v-col xs="2">
             <div>
-              <!-- <v-chip small :class="`${project.status} white--text caption my-2`"> {{ project.status }}</v-chip> -->
               <v-chip
                 small
                 :color="`${item.status}`"
@@ -90,6 +94,7 @@
               >
             </div>
           </v-col>
+          <v-btn depressed color="error"> DELETE </v-btn>
         </v-row>
         <v-row cols="12">
           <v-divider></v-divider>
@@ -121,15 +126,17 @@ export default {
   created() {
     console.log(this.projects);
     this.sortBy();
-    this.ceshi();
+    this.getProjectsList();
   },
   methods: {
-    ceshi() {
+    // 初始化Projects数据
+    getProjectsList() {
       this.$axios.post("http://124.71.237.87:8777/list").then((res) => {
         this.projects = res.data;
       });
     },
-    opendialog() {
+    //打开弹窗
+    openDialog() {
       (this.title = ""),
         (this.content = ""),
         (this.due = ""),
@@ -137,7 +144,7 @@ export default {
     },
 
     //'http://124.71.237.87:8777/add'添加接口
-    baocun() {
+    postProjectsList() {
       let params = {
         title: this.title,
         person: this.content,
@@ -151,6 +158,8 @@ export default {
       this.test = false;
       console.log(this.projects);
     },
+
+    // 封装判断状态方法   根据当天的日期来标记任务的状态，如果是当天就是ongoing, 如果是以前的日期就是overdue, 如果是未来的话就是complete
     sortBy() {
       let mont = new Date();
       let date = {
