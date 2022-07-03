@@ -2,13 +2,13 @@ import axios from 'axios'
 //创建AXIOS
 const service = axios.create({
     //公共接口
-    baseURL: 'http://124.71.237.87:8777',
+    baseURL: process.env.VUE_APP_BASEAPI,
 
     timeout: 3* 1000
 })
 //请求拦截器
 service.interceptors.request.use(config => {
-    config.data = JSON.stringify(config.data);  //数据转换
+    // config.data = JSON.stringify(config.data);  //数据转换
     config.headers = {
         'Content-Type' : 'application/json' //配置请求头
     }
@@ -18,9 +18,11 @@ service.interceptors.request.use(config => {
     Promise.reject(error)
 })
 
+//响应拦截器
 service.interceptors.response.use(response => {
     return response
 }, error => {
+    // resfuls api 在这里处理状态
     // 接受到异常相应的处理开始
     if (error && error.response){
         switch (error.response.status){

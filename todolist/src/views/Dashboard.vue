@@ -105,6 +105,7 @@
 </template>
 
 <script>
+import { getProjectsList, addProjects } from "@/api";
 export default {
   name: "DashBoard",
   data() {
@@ -131,7 +132,7 @@ export default {
   methods: {
     // 初始化Projects数据
     getProjectsList() {
-      this.$axios.post("http://124.71.237.87:8777/list").then((res) => {
+      getProjectsList().then((res) => {
         this.projects = res.data;
       });
     },
@@ -143,7 +144,7 @@ export default {
         (this.test = true);
     },
 
-    //'http://124.71.237.87:8777/add'添加接口
+    //添加数据
     postProjectsList() {
       let params = {
         title: this.title,
@@ -151,7 +152,7 @@ export default {
         due: this.due,
         status: this.sortBy(this.due),
       };
-      this.$axios.post("http://124.71.237.87:8777/add", params).then((res) => {
+      addProjects(params).then((res) => {
         console.log(res);
       });
 

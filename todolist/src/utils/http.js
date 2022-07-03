@@ -9,7 +9,7 @@ const http ={
         if(params) config.params = params
         return request(config)
     },
-    getProjectsList(url,params){
+    posrProjectsList(url,params){
         const config = {
             method: 'post',
             url:url
