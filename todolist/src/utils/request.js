@@ -1,17 +1,21 @@
 import axios from 'axios'
+import qs from 'qs'
 //创建AXIOS
 const service = axios.create({
     //公共接口
     baseURL: process.env.VUE_APP_BASEAPI,
-
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    transformRequest: [function (data, config) {
+        if (config['Content-Type'] == "application/json") return JSON.stringify(data)
+        return qs.stringify(data, { arrayFormat: 'brackets' })
+    }],
     timeout: 3* 1000
 })
 //请求拦截器
 service.interceptors.request.use(config => {
     // config.data = JSON.stringify(config.data);  //数据转换
-    config.headers = {
-        'Content-Type' : 'application/json' //配置请求头
-    }
     return config
 
 }, error => {

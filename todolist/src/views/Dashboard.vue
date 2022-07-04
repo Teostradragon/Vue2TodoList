@@ -43,12 +43,18 @@
     <!--openDialog是Dashboard页面的添加按钮之后dialog-->
     <v-btn @click="openDialog" class="success">Add new project</v-btn>
 
-    <!-- 点击Sorts projects by name按照项目名排列-->
+    <!-- 点击Sorts projects by name按照项目名A - Z排列-->
     <v-container class="my-5">
       <v-row class="mb-3">
         <v-tooltip top>
           <template v-slot:activator="{ on }">
-            <v-btn small text color="grey" @click="sortBy('title')" v-on="on">
+            <v-btn
+              small
+              text
+              color="grey"
+              @click="sortByProject('title')"
+              v-on="on"
+            >
               <v-icon left small>mdi-folder</v-icon>
               <span right class="caption text-lowercase">by projects name</span>
             </v-btn>
@@ -56,10 +62,16 @@
           <span>Sorts projects by name</span>
         </v-tooltip>
 
-        <!-- 点击Sorts projects By person按照人名排列-->
+        <!-- 点击Sorts projects By person按照人名A - Z排列-->
         <v-tooltip top>
           <template v-slot:activator="{ on }">
-            <v-btn small text color="grey" @click="sortBy('person')" v-on="on">
+            <v-btn
+              small
+              text
+              color="grey"
+              @click="sortByProject('person')"
+              v-on="on"
+            >
               <v-icon left small>mdi-account</v-icon>
               <span right class="caption text-lowercase">By person</span>
             </v-btn>
@@ -94,7 +106,9 @@
               >
             </div>
           </v-col>
-          <v-btn depressed color="error"> DELETE </v-btn>
+          <v-btn depressed color="error" @click="deleteProjectsList(item)">
+            DELETE
+          </v-btn>
         </v-row>
         <v-row cols="12">
           <v-divider></v-divider>
@@ -105,7 +119,7 @@
 </template>
 
 <script>
-import { getProjectsList, addProjects } from "@/api";
+import { getProjectsList, addProjects, delProjects } from "@/api";
 export default {
   name: "DashBoard",
   data() {
@@ -115,7 +129,7 @@ export default {
       projects: [],
 
       title: "",
-      content: "",
+      ctonten: "",
       test: false,
       person: "",
       due: "",
@@ -130,6 +144,12 @@ export default {
     this.getProjectsList();
   },
   methods: {
+    //删除一个数据
+    deleteProjectsList(row) {
+      delProjects(row.id).then(() => {
+        this.getProjectsList();
+      });
+    },
     // 初始化Projects数据
     getProjectsList() {
       getProjectsList().then((res) => {
@@ -181,6 +201,12 @@ export default {
       } else if (this.due < dayDate) {
         return "overdue";
       }
+    },
+
+    //sort函数对数据进行排序。 sort方法接受一个arrow函数作为回调,a和b代表两个数据元素，prop可以是title或者person
+    //这里函数应该返回-1或者1，如果需要更改顺序，则为1，反之-1； ？是说如果真的返还1，假的返-1
+    sortByProject(prop) {
+      this.projects.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
     },
   },
 };

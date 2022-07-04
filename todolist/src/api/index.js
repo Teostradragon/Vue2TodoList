@@ -14,6 +14,12 @@ export function addProjects(data){
 }
 
 
+// 删除一个todo
+export function delProjects(id){
+    return request.post(`/delete`,{id})
+}
+
+
 
 //get请求
 export function getProjectsList2(params){
@@ -29,12 +35,9 @@ export function getProjectsList3(data){
 
 
 //delete请求
-export function getProjectsList4(data){
+export function deleteProjects(data){
     return request.delete(`/list`,data)
 }
-
-
-
 
 // let request = "/testIp/request"
 //get请求
