@@ -4,39 +4,39 @@ import request from '@/utils/request'
 
 
 //post请求 获取todo列表
-export function getProjectsList(data){
-    return request.post(`/list`,data)
+export function getProjectsList(data) {
+    return request.post(`/list`, data)
 }
 
 // 新增一个todo
-export function addProjects(data){
-    return request.post(`/add`,data)
+export function addProjects(data) {
+    return request.post(`/add`, data)
 }
 
 
 // 删除一个todo
-export function delProjects(id){
-    return request.post(`/delete`,{id})
+export function delProjects(id) {
+    return request.post(`/delete`, { id })
 }
 
 
 
 //get请求
-export function getProjectsList2(params){
-    return request.get(`/list`,{params})
+export function getProjectsList2(params) {
+    return request.get(`/list`, { params })
 }
 
 
 
 //put请求
-export function getProjectsList3(data){
-    return request.put(`/list`,data)
+export function getProjectsList3(data) {
+    return request.put(`/list`, data)
 }
 
 
 //delete请求
-export function deleteProjects(data){
-    return request.delete(`/list`,data)
+export function deleteProjects(data) {
+    return request.delete(`/list`, data)
 }
 
 // let request = "/testIp/request"
