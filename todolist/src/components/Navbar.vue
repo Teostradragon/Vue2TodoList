@@ -1,8 +1,7 @@
 <template>
     <nav>
         <v-app-bar text app>
-            <v-app-bar-nav-icon @click="drawer = !drawer" class="grey--text">
-            </v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click="drawer = !drawer" class="grey--text"></v-app-bar-nav-icon>
             <v-app-bar-title class="text-uppercase grey--text">
                 <span class="font-weight-light">Todo</span>
                 <span>List</span>
@@ -17,12 +16,7 @@
                     </v-btn>
                 </template>
                 <v-list>
-                    <v-list-item
-                        v-for="link in links"
-                        :key="link.text"
-                        router
-                        :to="link.route"
-                    >
+                    <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
                         <v-list-item-title>{{ link.text }}</v-list-item-title>
                     </v-list-item>
                 </v-list>
@@ -38,27 +32,20 @@
             <v-row>
                 <v-col class="mt-5 text-center">
                     <v-avatar size="100">
-                        <img src="/avatar-1.png" alt="" />
+                        <img src="/avatar-1.png" alt />
                     </v-avatar>
                     <p class="white--text text-subtitle-1 mt-1">Chris Wu</p>
                 </v-col>
-                <v-col class="mb-3 text-center"> </v-col>
+                <v-col class="mb-3 text-center"></v-col>
             </v-row>
 
             <v-list>
-                <v-list-item
-                    v-for="link in links"
-                    :key="link.text"
-                    router
-                    :to="link.route"
-                >
+                <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
                     <v-list-item-action>
                         <v-icon class="white--text">{{ link.icon }}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title class="white--text">{{
-                            link.text
-                        }}</v-list-item-title>
+                        <v-list-item-title class="white--text">{{ link.text }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>

@@ -4,14 +4,7 @@
 
         <v-container class="my-5">
             <v-row>
-                <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                    lg="3"
-                    v-for="person in team"
-                    :key="person.name"
-                >
+                <v-col cols="12" sm="6" md="4" lg="3" v-for="person in team" :key="person.name">
                     <v-card class="text-center ma-3">
                         <v-responsive class="pt-4">
                             <v-avatr size="100" class="grey lighten-2">
@@ -24,7 +17,7 @@
                         </v-card-text>
                         <v-card-action>
                             <v-btn depressed class="grey--text">
-                                <v-icon small left> mdi-message </v-icon>
+                                <v-icon small left>mdi-message</v-icon>
                                 <span>Message</span>
                             </v-btn>
                         </v-card-action>

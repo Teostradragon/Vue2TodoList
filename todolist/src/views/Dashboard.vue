@@ -10,24 +10,9 @@
                 </v-card-title>
                 <v-card-text>
                     <v-form class="px-3">
-                        <v-text-field
-                            label="Title"
-                            v-model="title"
-                            prepend-icon="folder"
-                        >
-                        </v-text-field>
-                        <v-text-field
-                            label="Person"
-                            v-model="person"
-                            prepend-icon="person"
-                        >
-                        </v-text-field>
-                        <v-textarea
-                            label="Information"
-                            v-model="content"
-                            prepend-icon="edit"
-                        >
-                        </v-textarea>
+                        <v-text-field label="Title" v-model="title" prepend-icon="folder"></v-text-field>
+                        <v-text-field label="Person" v-model="person" prepend-icon="person"></v-text-field>
+                        <v-textarea label="Information" v-model="content" prepend- icon="edit"></v-textarea>
                         <!--鼠标移出事件  失焦-->
                         <v-menu max-width="290">
                             <template v-slot:activator="{ on }">
@@ -42,12 +27,7 @@
                             <v-date-picker v-model="due"></v-date-picker>
                         </v-menu>
 
-                        <v-btn
-                            text
-                            class="primary mx-0 mt-3"
-                            @click="postProjectsList"
-                            >Add project</v-btn
-                        >
+                        <v-btn text class="primary mx-0 mt-3" @click="postProjectsList">Add project</v-btn>
                     </v-form>
                 </v-card-text>
             </v-card>
@@ -61,17 +41,9 @@
             <v-row class="mb-3">
                 <v-tooltip top>
                     <template v-slot:activator="{ on }">
-                        <v-btn
-                            small
-                            text
-                            color="grey"
-                            @click="sortByProject('title')"
-                            v-on="on"
-                        >
+                        <v-btn small text color="grey" @click="sortByProject('title')" v-on="on">
                             <v-icon left small>mdi-folder</v-icon>
-                            <span right class="caption text-lowercase"
-                                >by projects name</span
-                            >
+                            <span right class="caption text-lowercase">by projects name</span>
                         </v-btn>
                     </template>
                     <span>Sorts projects by name</span>
@@ -80,17 +52,9 @@
                 <!-- 点击Sorts projects By person按照人名A - Z排列-->
                 <v-tooltip top>
                     <template v-slot:activator="{ on }">
-                        <v-btn
-                            small
-                            text
-                            color="grey"
-                            @click="sortByProject('person')"
-                            v-on="on"
-                        >
+                        <v-btn small text color="grey" @click="sortByProject('person')" v-on="on">
                             <v-icon left small>mdi-account</v-icon>
-                            <span right class="caption text-lowercase"
-                                >By person</span
-                            >
+                            <span right class="caption text-lowercase">By person</span>
                         </v-btn>
                     </template>
                     <span>Sorts projects By person</span>
@@ -98,19 +62,9 @@
             </v-row>
 
             <!-- 显示title，person，due date的内容，projects-->
-            <v-card
-                text
-                tile
-                class="px-3"
-                v-for="item in projects"
-                :key="item.id"
-            >
+            <v-card text tile class="px-3" v-for="item in projects" :key="item.id">
                 <v-row align="center" justify="space-around">
-                    <v-col
-                        cols="12"
-                        md="6"
-                        :class="`pl-3 project ${item.status}`"
-                    >
+                    <v-col cols="12" md="6" :class="`pl-3 project ${item.status}`">
                         <div class="caption grey--text">Project Title</div>
                         <div>{{ item.title }}</div>
                     </v-col>
@@ -128,18 +82,10 @@
                                 small
                                 :color="`${item.status}`"
                                 :class="`v-chip--active white--text caption my-2`"
-                            >
-                                {{ item.status }}</v-chip
-                            >
+                            >{{ item.status }}</v-chip>
                         </div>
                     </v-col>
-                    <v-btn
-                        depressed
-                        color="error"
-                        @click="deleteProjectsList(item)"
-                    >
-                        DELETE
-                    </v-btn>
+                    <v-btn depressed color="error" @click="deleteProjectsList(item)">DELETE</v-btn>
                 </v-row>
                 <v-row cols="12">
                     <v-divider></v-divider>
