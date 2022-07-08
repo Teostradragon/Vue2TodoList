@@ -16,13 +16,7 @@
                         <!--鼠标移出事件  失焦-->
                         <v-menu max-width="290">
                             <template v-slot:activator="{ on }">
-                                <v-text-field
-                                    :value="formattedDate"
-                                    label="Due date"
-                                    prepend-icon="mdi-calendar-range"
-                                    @change="iii(formattedDate)"
-                                    v-on="on"
-                                ></v-text-field>
+                                <v-text-field :value="formattedDate" label="Due date" prepend-icon="mdi-calendar-range" @change="iii(formattedDate)" v-on="on"></v-text-field>
                             </template>
                             <v-date-picker v-model="due"></v-date-picker>
                         </v-menu>
@@ -78,11 +72,7 @@
                     </v-col>
                     <v-col xs="2">
                         <div>
-                            <v-chip
-                                small
-                                :color="`${item.status}`"
-                                :class="`v-chip--active white--text caption my-2`"
-                            >{{ item.status }}</v-chip>
+                            <v-chip small :color="`${item.status}`" :class="`v-chip--active white--text caption my-2`">{{ item.status }}</v-chip>
                         </div>
                     </v-col>
                     <v-btn depressed color="error" @click="deleteProjectsList(item)">DELETE</v-btn>
@@ -96,14 +86,14 @@
 </template>
 
 <script>
-import { getProjectsList, addProjects, delProjects } from "@/api";
+import { addProjects, delProjects } from "@/api";
 export default {
     name: "DashBoard",
     data() {
         return {
             titles: [],
             persons: [],
-            projects: [],
+            // projects: [], //这个
             content: "",
 
             title: "",
@@ -121,6 +111,11 @@ export default {
         this.sortBy();
         this.getProjectsList();
     },
+    computed: {
+        projects() {
+            return this.$store.state.projects;
+        },
+    },
     methods: {
         //删除一个数据
         deleteProjectsList(row) {
@@ -130,9 +125,10 @@ export default {
         },
         // 初始化Projects数据
         getProjectsList() {
-            getProjectsList().then((res) => {
-                this.projects = res.data;
-            });
+            this.$store.dispatch("getProjects");
+            // getProjectsList().then((res) => {
+            //     this.projects = res.data;
+            // });
         },
         //打开弹窗
         openDialog() {
