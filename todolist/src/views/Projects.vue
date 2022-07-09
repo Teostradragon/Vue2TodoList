@@ -22,29 +22,36 @@
 </template>
 
 <script>
-import { getProjectsList } from "@/api";
 export default {
     name: "ProjectView",
     data() {
         return {
-            projects: [],
+            // projects: [],
         };
     },
     created() {
         this.getProjectsList();
     },
+    computed: {
+        projects() {
+            return this.$store.state.projects;
+        },
+    },
+
     methods: {
         //
         getProjectsList() {
-            getProjectsList().then((res) => {
-                let data = res.data;
-                for (let a in data) {
-                    if (data[a].status != "overdue") {
-                        this.projects.push(data[a]);
-                    }
-                }
-                console.log(this.projects);
-            });
+            this.$store.dispatch("getProjects");
+
+            // getProjectsList().then((res) => {
+            //     let data = res.data;
+            //     for (let a in data) {
+            //         if (data[a].status != "overdue") {
+            //             this.projects.push(data[a]);
+            //         }
+            //     }
+            //     console.log(this.projects);
+            // });
             //json  x-www form-data
             // .catch((error) => {
             //   if (error.statusCode == 401) {
@@ -54,16 +61,17 @@ export default {
             // });
         },
     },
-    computed: {
-        // 只展示Chris Wu将要做的内容，已经过期的内容不要。
-        fetchTask() {
-            return this.projects.filter((project) => {
-                return (
-                    project.person === "Chris Wu" &&
-                    project.status != "complete"
-                );
-            });
-        },
-    },
+
+    // // computed: {
+    // //     // 只展示Chris Wu将要做的内容，已经过期的内容不要。
+    // //     fetchTask() {
+    // //         return this.projects.filter((project) => {
+    // //             return (
+    // //                 project.person === "Chris Wu" &&
+    // //                 project.status != "complete"
+    // //             );
+    // //         });
+    // //     },
+    // },
 };
 </script>
