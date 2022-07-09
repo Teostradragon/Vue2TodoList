@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import Projects from '../views/Projects'
 import Team from '../views/Team'
+import Echarts from '../views/Echarts'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,11 @@ const routes = [
     path: '/team',
     name: 'team',
     component: Team
+  },
+  {
+    path: '/echarts',
+    name: 'echarts',
+    component: Echarts
   }
 ]
 
