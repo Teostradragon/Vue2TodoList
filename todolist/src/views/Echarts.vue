@@ -33,7 +33,7 @@ export default {
         return {
             option: {
                 title: {
-                    text: "Traffic Sources",
+                    text: "Submission",
                     left: "center",
                 },
                 tooltip: {
@@ -47,7 +47,7 @@ export default {
                 },
                 series: [
                     {
-                        name: "Traffic Sources",
+                        name: "Submission",
                         type: "pie",
                         radius: "55%",
                         center: ["50%", "60%"],

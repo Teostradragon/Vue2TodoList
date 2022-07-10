@@ -11,7 +11,7 @@ const service = axios.create({
         if (config['Content-Type'] == "application/json") return JSON.stringify(data)
         return qs.stringify(data, { arrayFormat: 'brackets' })
     }],
-    timeout: 3* 1000
+    timeout: 3 * 1000
 })
 //请求拦截器
 service.interceptors.request.use(config => {
@@ -28,11 +28,11 @@ service.interceptors.response.use(response => {
 }, error => {
     // resfuls api 在这里处理状态
     // 接受到异常相应的处理开始
-    if (error && error.response){
-        switch (error.response.status){
+    if (error && error.response) {
+        switch (error.response.status) {
             case 400:
                 //错误请求
-                
+
                 break;
             case 401:
                 //未授权
@@ -45,46 +45,46 @@ service.interceptors.response.use(response => {
             case 404:
                 //NotFound
 
-            break;
+                break;
             case 405:
                 //请求方法未允许
 
-            break;
+                break;
             case 408:
                 //请求超时
 
-            break;
+                break;
             case 500:
                 //服务器端出错
 
-            break;
+                break;
             case 501:
                 //网络未实现
 
-            break;
+                break;
             case 502:
                 //网络错误
 
-            break;
+                break;
             case 503:
                 //服务不可用
 
-            break;
+                break;
             case 504:
                 //网络超时
 
-            break;
+                break;
             case 505:
                 //http版本不支持该请求
 
-            break;
+                break;
             default:
-                //连接错误
+            //连接错误
 
         }
-    }else{
+    } else {
         //超时处理
-        if (JSON.stringify(error).includes('timeout')){
+        if (JSON.stringify(error).includes('timeout')) {
             // 服务器响应超时，刷新当前页
         }
         // 连接服务器失败

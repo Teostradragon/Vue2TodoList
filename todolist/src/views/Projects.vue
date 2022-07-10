@@ -34,7 +34,11 @@ export default {
     },
     computed: {
         projects() {
-            return this.$store.state.projects;
+            return this.$store.state.projects.filter((project) => {
+                return (
+                    project.person === "Chris Wu" && project.status != "overdue"
+                );
+            });
         },
     },
 
@@ -51,13 +55,6 @@ export default {
             //         }
             //     }
             //     console.log(this.projects);
-            // });
-            //json  x-www form-data
-            // .catch((error) => {
-            //   if (error.statusCode == 401) {
-            //   }
-            //   if (error.statusCode == 401) {
-            //   }
             // });
         },
     },
