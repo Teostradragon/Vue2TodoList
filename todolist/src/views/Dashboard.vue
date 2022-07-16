@@ -93,7 +93,7 @@ export default {
         return {
             titles: [],
             persons: [],
-            // projects: [], //这个
+            // projects: [],
             content: "",
 
             title: "",
@@ -169,13 +169,37 @@ export default {
                 (date.month >= 10 ? date.month : "0" + date.month) +
                 "-" +
                 (date.day >= 10 ? date.day : "0" + date.day);
-            if (this.due > dayDate) {
+            console.log(this.due, dayDate);
+            let a = this.due.split("-");
+            let b = dayDate.split("-");
+
+            if (a[0] > b[0]) {
                 return "complete";
-            } else if ((this.due = dayDate)) {
-                return "ongoing";
-            } else if (this.due < dayDate) {
+            } else if (a[0] < b[0]) {
                 return "overdue";
+            } else if ((a[0] = b[0])) {
+                if (a[1] > b[1]) {
+                    return "complete";
+                } else if (a[1] < b[1]) {
+                    return "overdue";
+                } else if ((a[1] = b[1])) {
+                    if (a[2] > b[2]) {
+                        return "complete";
+                    } else if (a[2] < b[2]) {
+                        return "overdue";
+                    } else if ((a[2] = b[2])) {
+                        return "ongoing";
+                    }
+                }
             }
+
+            // if (this.due > dayDate) {
+            //     return "complete";
+            // } else if ((this.due = dayDate)) {
+            //     return "ongoing";
+            // } else if (this.due < dayDate) {
+            //     return "overdue";
+            // }
         },
 
         //sort函数对数据进行排序。 sort方法接受一个arrow函数作为回调,a和b代表两个数据元素，prop可以是title或者person
