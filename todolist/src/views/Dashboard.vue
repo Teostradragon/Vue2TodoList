@@ -149,6 +149,7 @@ export default {
             };
             addProjects(params).then((res) => {
                 console.log(res);
+                this.$store.dispatch("getProjects");
             });
 
             this.test = false;

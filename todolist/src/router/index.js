@@ -5,6 +5,7 @@ import Projects from '../views/Projects'
 import Team from '../views/Team'
 import Echarts from '../views/Echarts'
 
+
 Vue.use(VueRouter)
 
 const routes = [
