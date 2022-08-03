@@ -1,34 +1,18 @@
 <template>
-    <v-chart class="chart" :option="option" />
+    <div>
+        <p>Echarts</p>
+        <div ref="echarts" class="simpleDemo"></div>
+        <div>
+            <router-link to="/">Go back to Dashboard</router-link>
+        </div>
+    </div>
 </template>
 
 <script>
-import { use } from "echarts/core";
-import { CanvasRenderer } from "echarts/renderers";
-import { PieChart } from "echarts/charts";
-import {
-    TitleComponent,
-    TooltipComponent,
-    LegendComponent,
-} from "echarts/components";
-import VChart, { THEME_KEY } from "vue-echarts";
-
-use([
-    CanvasRenderer,
-    PieChart,
-    TitleComponent,
-    TooltipComponent,
-    LegendComponent,
-]);
-
+import * as echarts from "echarts";
 export default {
-    name: "HelloWorld",
-    components: {
-        VChart,
-    },
-    provide: {
-        [THEME_KEY]: "dark",
-    },
+    name: "echartsView",
+
     data() {
         return {
             option: {
@@ -70,19 +54,29 @@ export default {
             },
         };
     },
+    mounted() {
+        this.getPage();
+    },
+    methods: {
+        getPage() {
+            this.chart = echarts.init(this.$refs.echarts);
+            // 使用刚指定的配置项和数据显示图表。
+            this.chart.setOption(this.option);
+        },
+    },
 };
 </script>
 
 <style scoped>
-.chart {
-    height: 100vh;
+.simpleDemo {
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+}
+a {
+    color: #00cc66;
+}
+.router-link-active {
+    text-decoration: none;
 }
 </style>
-
-<style>
-body {
-    margin: 0;
-}
-</style>
-
-
