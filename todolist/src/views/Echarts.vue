@@ -1,7 +1,12 @@
 <template>
     <div>
         <p>Echarts</p>
-        <div ref="echarts" class="simpleDemo"></div>
+        <ECharts2 :config="option" />
+
+        <ECharts2 :config="option" />
+
+        <ECharts2 :config="option" />
+        <!-- <div ref="echarts" class="simpleDemo"></div> -->
         <div>
             <router-link to="/">Go back to Dashboard</router-link>
         </div>
@@ -9,10 +14,13 @@
 </template>
 
 <script>
-import * as echarts from "echarts";
+// import * as echarts from "echarts";
+import ECharts2 from "./Echarts2.vue";
 export default {
     name: "echartsView",
-
+    components: {
+        ECharts2,
+    },
     data() {
         return {
             option: {
@@ -55,14 +63,18 @@ export default {
         };
     },
     mounted() {
-        this.getPage();
+        // this.getPage();
+        // setInterval(() => {
+        //     this.option.series[0].data[0].value += 100;
+        //     console.log(this.option.series[0].data);
+        // }, 1000);
     },
     methods: {
-        getPage() {
-            this.chart = echarts.init(this.$refs.echarts);
-            // 使用刚指定的配置项和数据显示图表。
-            this.chart.setOption(this.option);
-        },
+        // getPage() {
+        //     this.chart = echarts.init(this.$refs.echarts);
+        //     // 使用刚指定的配置项和数据显示图表。
+        //     this.chart.setOption(this.option);
+        // },
     },
 };
 </script>
