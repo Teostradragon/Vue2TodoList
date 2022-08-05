@@ -1,4 +1,5 @@
 <template>
+
     <div class="dashboard">
         <h1 class="subheading grey--text">Dashboard</h1>
 
@@ -132,10 +133,7 @@ export default {
         },
         //打开弹窗
         openDialog() {
-            (this.title = ""),
-                (this.content = ""),
-                (this.due = ""),
-                (this.test = true);
+            (this.title = ""), (this.content = ""), (this.due = ""), (this.test = true);
         },
 
         //添加数据
@@ -164,12 +162,7 @@ export default {
                 month: mont.getMonth() + 1,
                 day: mont.getDate(),
             };
-            let dayDate =
-                date.year +
-                "-" +
-                (date.month >= 10 ? date.month : "0" + date.month) +
-                "-" +
-                (date.day >= 10 ? date.day : "0" + date.day);
+            let dayDate = date.year + "-" + (date.month >= 10 ? date.month : "0" + date.month) + "-" + (date.day >= 10 ? date.day : "0" + date.day);
             console.log(this.due, dayDate);
             let a = this.due.split("-");
             let b = dayDate.split("-");

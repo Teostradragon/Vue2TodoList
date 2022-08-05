@@ -1,11 +1,11 @@
-<template>
-    <div>
+     <template>
+    <div> 
         <p>Echarts</p>
-        <ECharts2 :config="option" />
+        <PieEcharts :config="option" />
 
-        <ECharts2 :config="option" />
+        <PieEcharts :config="option" />
 
-        <ECharts2 :config="option" />
+        <PieEcharts :config="option" />
         <!-- <div ref="echarts" class="simpleDemo"></div> -->
         <div>
             <router-link to="/">Go back to Dashboard</router-link>
@@ -15,67 +15,31 @@
 
 <script>
 // import * as echarts from "echarts";
-import ECharts2 from "./Echarts2.vue";
+import PieEcharts from "./echarts/PieEcharts.vue";
 export default {
     name: "echartsView",
     components: {
-        ECharts2,
+        PieEcharts,
     },
     data() {
         return {
-            option: {
-                title: {
-                    text: "Submission",
-                    left: "center",
-                },
-                tooltip: {
-                    trigger: "item",
-                    formatter: "{a} <br/>{b} : {c} ({d}%)",
-                },
-                legend: {
-                    orient: "vertical",
-                    left: "left",
-                    data: ["Amber", "Jacob", "William", "Alex", "Chris"],
-                },
-                series: [
-                    {
-                        name: "Submission",
-                        type: "pie",
-                        radius: "55%",
-                        center: ["50%", "60%"],
-                        data: [
-                            { value: 335, name: "Amber" },
-                            { value: 310, name: "Jacob" },
-                            { value: 234, name: "William" },
-                            { value: 135, name: "Alex" },
-                            { value: 1548, name: "Chris" },
-                        ],
-                        emphasis: {
-                            itemStyle: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: "rgba(0, 0, 0, 0.5)",
-                            },
-                        },
-                    },
-                ],
-            },
+            option: {},
         };
     },
-    mounted() {
-        // this.getPage();
-        // setInterval(() => {
-        //     this.option.series[0].data[0].value += 100;
-        //     console.log(this.option.series[0].data);
-        // }, 1000);
-    },
-    methods: {
-        // getPage() {
-        //     this.chart = echarts.init(this.$refs.echarts);
-        //     // 使用刚指定的配置项和数据显示图表。
-        //     this.chart.setOption(this.option);
-        // },
-    },
+    // mounted() {
+    //     // this.getPage();
+    //     // setInterval(() => {
+    //     //     this.option.series[0].data[0].value += 100;
+    //     //     console.log(this.option.series[0].data);
+    //     // }, 1000);
+    // },
+    // methods: {
+    //     // getPage() {
+    //     //     this.chart = echarts.init(this.$refs.echarts);
+    //     //     // 使用刚指定的配置项和数据显示图表。
+    //     //     this.chart.setOption(this.option);
+    //     // },
+    // },
 };
 </script>
 
