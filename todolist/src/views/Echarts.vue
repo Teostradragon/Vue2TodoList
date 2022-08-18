@@ -1,58 +1,77 @@
-     <template>
-    <div> 
-        <p>Echarts</p>
-        <PieEcharts :config="option" />
-
-        <PieEcharts :config="option" />
-
-        <PieEcharts :config="option" />
-        <!-- <div ref="echarts" class="simpleDemo"></div> -->
-        <div>
-            <router-link to="/">Go back to Dashboard</router-link>
-        </div>
+<template>
+    <div id="app1">
+        <sb-line :data="zz" :options="options"></sb-line>
     </div>
 </template>
 
 <script>
-// import * as echarts from "echarts";
-import PieEcharts from "./echarts/PieEcharts.vue";
 export default {
-    name: "echartsView",
-    components: {
-        PieEcharts,
-    },
+    name: "EchartsVIEW",
     data() {
         return {
-            option: {},
+            zz: [
+                {
+                    date: "2020-01-01",
+                    shouru: 51000,
+                    zhichu: 13000,
+                    zhongjiang: 14000,
+                },
+                {
+                    date: "2020-01-02",
+                    shouru: 16000,
+                    zhichu: 10500,
+                    zhongjiang: 12000,
+                },
+                {
+                    date: "2020-01-03",
+                    shouru: 41000,
+                    zhichu: 70300,
+                    zhongjiang: 14400,
+                },
+                {
+                    date: "2020-01-04",
+                    shouru: 10500,
+                    zhichu: 12600,
+                    zhongjiang: 24000,
+                },
+                {
+                    date: "2020-01-05",
+                    shouru: 12200,
+                    zhichu: 14030,
+                    zhongjiang: 11000,
+                },
+            ],
+            options: {
+                title: "我的图表",
+                subtext: "@simbajs",
+                xAxisKey: "date",
+                tooltipFmt(data) {
+                    return `${data.name}<br>${data.marker} ${data.seriesName}了${data.value}元`;
+                },
+                keys: [
+                    {
+                        label: "收入",
+                        val: "shouru",
+                    },
+                    {
+                        label: "支出",
+                        val: "zhichu",
+                    },
+                    {
+                        label: "抽奖",
+                        val: "zhongjiang",
+                    },
+                ],
+            },
         };
     },
-    // mounted() {
-    //     // this.getPage();
-    //     // setInterval(() => {
-    //     //     this.option.series[0].data[0].value += 100;
-    //     //     console.log(this.option.series[0].data);
-    //     // }, 1000);
-    // },
-    // methods: {
-    //     // getPage() {
-    //     //     this.chart = echarts.init(this.$refs.echarts);
-    //     //     // 使用刚指定的配置项和数据显示图表。
-    //     //     this.chart.setOption(this.option);
-    //     // },
-    // },
 };
 </script>
 
-<style scoped>
-.simpleDemo {
-    width: 600px;
-    height: 400px;
-    margin: 0 auto;
-}
-a {
-    color: #00cc66;
-}
-.router-link-active {
-    text-decoration: none;
+<style>
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 </style>
