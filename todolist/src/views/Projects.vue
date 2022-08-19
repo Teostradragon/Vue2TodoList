@@ -35,7 +35,9 @@ export default {
     computed: {
         projects() {
             return this.$store.state.projects.filter((project) => {
-                return project.person === "Chris Wu" && project.status != "overdue";
+                return (
+                    project.person === "Chris Wu" && project.status != "overdue"
+                );
             });
         },
     },
