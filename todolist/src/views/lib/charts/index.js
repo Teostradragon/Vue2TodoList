@@ -12,7 +12,7 @@ export default {
                 }
             }
         })
-        Vue.component('sb-line', Line)
+        Vue.component('lineChart', Line)
 
     }
 }

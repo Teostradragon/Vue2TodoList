@@ -1,5 +1,5 @@
 <template>
-    <div ref="chart" :style="{width,height}" class="container"></div>
+    <div ref="chart" :style="{width,height}" ></div>
 </template>
 
 <script>
@@ -31,6 +31,7 @@ export default {
             };
         });
 
+
         let option1 = {
             title: {
                 text: this.options.title,
@@ -49,6 +50,7 @@ export default {
             xAxis: {
                 data: this.data.map((r) => r[this.options.xAxisKey]),
                 axisLabel: {
+                    //文字倾斜30度。从而显示文字
                     rotate: 30,
                     fontSize: 10,
                 },
