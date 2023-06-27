@@ -1,16 +1,17 @@
-export const mutations = {
-  setTodos: (state, todos) => (state.todos = todos),
-  newTodo: (state, todo) => state.todos.unshift(todo),
-  updateTodo: (state, { id, todo }) => {
-    const index = state.todos.findIndex(t => t._id === id);
+export default {
+  SET_TODOS(state, todos) {
+    state.todos = todos;
+  },
+  ADD_TODO(state, todo) {
+    state.todos.unshift(todo);
+  },
+  REMOVE_TODO(state, todoId) {
+    state.todos = state.todos.filter((todo) => todo._id !== todoId);
+  },
+  UPDATE_TODO(state, updatedTodo) {
+    const index = state.todos.findIndex((todo) => todo._id === updatedTodo._id);
     if (index !== -1) {
-      state.todos.splice(index, 1, todo);
+      state.todos.splice(index, 1, updatedTodo);
     }
   },
-  deleteTodo: (state, id) => {
-    const index = state.todos.findIndex(t => t._id === id);
-    if (index !== -1) {
-      state.todos.splice(index, 1);
-    }
-  }
 };

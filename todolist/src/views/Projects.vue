@@ -26,7 +26,6 @@ export default {
     name: "ProjectView",
     data() {
         return {
-            // projects: [],
         };
     },
     created() {
@@ -47,28 +46,9 @@ export default {
         getProjectsList() {
             this.$store.dispatch("getProjects");
 
-            // getProjectsList().then((res) => {
-            //     let data = res.data;
-            //     for (let a in data) {
-            //         if (data[a].status != "overdue") {
-            //             this.projects.push(data[a]);
-            //         }
-            //     }
-            //     console.log(this.projects);
-            // });
         },
     },
 
-    // // computed: {
-    // //     // 只展示Chris Wu将要做的内容，已经过期的内容不要。
-    // //     fetchTask() {
-    // //         return this.projects.filter((project) => {
-    // //             return (
-    // //                 project.person === "Chris Wu" &&
-    // //                 project.status != "complete"
-    // //             );
-    // //         });
-    // //     },
-    // },
+
 };
 </script>

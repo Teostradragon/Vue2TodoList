@@ -1,36 +1,23 @@
-import todoApi from '@/api/todoApi.js';
+import todoApi from '../api/todoApi';
 
-export const actions = {
-  async fetchTodos({ commit }) {
-    try {
-      const response = await todoApi.getTodos();
-      commit('setTodos', response.data);
-    } catch (error) {
-      console.error(error);
-    }
+export default {
+  async getTodos({ commit }) {
+    const response = await todoApi.getTodos();
+    commit('SET_TODOS', response.data);
   },
-  async createTodo({ commit }, todo) {
-    try {
-      const response = await todoApi.postTodo(todo);
-      commit('newTodo', response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  async updateTodo({ commit }, { id, todo }) {
-    try {
-      const response = await todoApi.putTodo(id, todo);
-      commit('updateTodo', { id, todo: response.data });
-    } catch (error) {
-      console.error(error);
-    }
+  async addTodo({ commit }, name) {
+    const response = await todoApi.createTodo({
+      name,
+      status: 'Incomplete',
+    });
+    commit('ADD_TODO', response.data);
   },
   async deleteTodo({ commit }, id) {
-    try {
-      await todoApi.deleteTodo(id);
-      commit('deleteTodo', id);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    await todoApi.deleteTodo(id);
+    commit('REMOVE_TODO', id);
+  },
+  async updateTodo({ commit }, updatedTodo) {
+    const response = await todoApi.updateTodo(updatedTodo);
+    commit('UPDATE_TODO', response.data);
+  },
 };

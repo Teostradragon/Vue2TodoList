@@ -86,16 +86,15 @@
 </template>
 
 <script>
-import { addProjects, delProjects } from "@/api";
+import { mapState } from "vuex";
+
 export default {
     name: "DashBoard",
     data() {
         return {
             titles: [],
             persons: [],
-            // projects: [],
             content: "",
-
             title: "",
             ctonten: "",
             test: false,
@@ -104,113 +103,82 @@ export default {
             status: "",
             formattedDate: "",
             Information: "",
+            sortProp: 'title',
         };
     },
     created() {
-        console.log(this.projects);
-        this.sortBy();
-        this.getProjectsList();
+        this.getTodos();
     },
     computed: {
-        projects() {
-            return this.$store.state.projects;
-        },
-    },
+        ...mapState(['todos']),
+         sortedTodos() {
+        return [...this.todos].sort((a, b) => (a[this.sortProp] < b[this.sortProp] ? -1 : 1));
+         }
+   },
     methods: {
+
         //删除一个数据
-        deleteProjectsList(row) {
-            delProjects(row.id).then(() => {
-                this.getProjectsList();
-            });
+        async deleteTodo(row) {
+            try {
+                await this.$store.dispatch('deleteTodo', row.id);
+                this.getTodos();
+            } catch (error) {
+                console.error(error);
+            }
         },
         // 初始化Projects数据
-        getProjectsList() {
-            this.$store.dispatch("getProjects");
-            // getProjectsList().then((res) => {
-            //     this.projects = res.data;
-            // });
+        async getTodos() {
+            try {
+                await this.$store.dispatch('getTodos');
+            } catch (error) {
+                console.error(error);
+            }
         },
         //打开弹窗
         openDialog() {
-            (this.title = ""),
-                (this.content = ""),
-                (this.due = ""),
-                (this.test = true);
+            this.title = '',
+            this.content = '',
+            this.due = '',
+            this.test = true;
         },
 
         //添加数据
-        postProjectsList() {
-            let params = {
-                title: this.title,
-                person: this.person,
-                content: this.content,
-                due: this.due,
-                status: this.sortBy(this.due),
-            };
-            addProjects(params).then((res) => {
-                console.log(res);
-                this.$store.dispatch("getProjects");
-            });
+async postTodo() {
+    const todo = {
+        name: this.title,
+        status: this.sortBy(this.due)
+    };
+    try {
+        await this.$store.dispatch('addTodo', todo);
+        this.title = '';
+        this.due = '';
+        this.test = false;
+    } catch (error) {
+        console.error(error);
+    }
+},
 
-            this.test = false;
-            console.log(this.projects);
-        },
+        // 封装判断状态方法
+        sortBy(dueDate) {
+    const today = new Date();
+    const due = new Date(dueDate);
 
-        // 封装判断状态方法   根据当天的日期来标记任务的状态，如果是当天就是ongoing, 如果是以前的日期就是overdue, 如果是未来的话就是complete
-        sortBy() {
-            let mont = new Date();
-            let date = {
-                year: mont.getFullYear(),
-                month: mont.getMonth() + 1,
-                day: mont.getDate(),
-            };
-            let dayDate =
-                date.year +
-                "-" +
-                (date.month >= 10 ? date.month : "0" + date.month) +
-                "-" +
-                (date.day >= 10 ? date.day : "0" + date.day);
-            console.log(this.due, dayDate);
-            let a = this.due.split("-");
-            let b = dayDate.split("-");
-
-            if (a[0] > b[0]) {
-                return "complete";
-            } else if (a[0] < b[0]) {
-                return "overdue";
-            } else if ((a[0] = b[0])) {
-                if (a[1] > b[1]) {
-                    return "complete";
-                } else if (a[1] < b[1]) {
-                    return "overdue";
-                } else if ((a[1] = b[1])) {
-                    if (a[2] > b[2]) {
-                        return "complete";
-                    } else if (a[2] < b[2]) {
-                        return "overdue";
-                    } else if ((a[2] = b[2])) {
-                        return "ongoing";
-                    }
-                }
-            }
-
-            // if (this.due > dayDate) {
-            //     return "complete";
-            // } else if ((this.due = dayDate)) {
-            //     return "ongoing";
-            // } else if (this.due < dayDate) {
-            //     return "overdue";
-            // }
-        },
-
-        //sort函数对数据进行排序。 sort方法接受一个arrow函数作为回调,a和b代表两个数据元素，prop可以是title或者person
-        //这里函数应该返回-1或者1，如果需要更改顺序，则为1，反之-1； ？是说如果真的返还1，假的返-1
-        sortByProject(prop) {
-            this.projects.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
-        },
+    if (due > today) {
+        return "complete";
+    } else if (due.setHours(0,0,0,0) === today.setHours(0,0,0,0)) {
+        return "ongoing";
+    } else {
+        return "overdue";
+    }
+}
+,
+            sortByProject(prop) {
+        this.sortProp = prop;
+    },
     },
 };
 </script>
+
 
 <style>
 .project.complete {
