@@ -1,17 +1,9 @@
 export default {
-  SET_TODOS(state, todos) {
-    state.todos = todos;
+  setProjects(state, projects) {
+    state.projectsList = projects; // 更新 Vuex store 中的项目列表数据
   },
-  ADD_TODO(state, todo) {
-    state.todos.unshift(todo);
-  },
-  REMOVE_TODO(state, todoId) {
-    state.todos = state.todos.filter((todo) => todo._id !== todoId);
-  },
-  UPDATE_TODO(state, updatedTodo) {
-    const index = state.todos.findIndex((todo) => todo._id === updatedTodo._id);
-    if (index !== -1) {
-      state.todos.splice(index, 1, updatedTodo);
-    }
-  },
+  addProject: (state, todo) => state.projectsList.unshift(todo),
+  removeTodo: (state, id) =>
+    (state.projectsList = state.projectsList.filter(todo => todo._id !== id)),
+  
 };

@@ -1,4 +1,3 @@
-const state = {
-    projects: []
-}
-export default state
+export default {
+  projectsList: [] // 更正为 projectsList
+};
