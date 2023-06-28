@@ -35,29 +35,28 @@ export default {
         return {
             team: [
                 {
-                    name: "Chris Wu",
+                    name: "Wu",
                     role: "Web developer",
                     avatar: "/avatar-1.png",
                 },
                 {
-                    name: "William",
+                    name: "Yuan",
                     role: "Graphic designer",
                     avatar: "/avatar-2.png",
                 },
                 {
-                    name: "Jacob",
+                    name: "AA",
                     role: "Web developer",
                     avatar: "/avatar-3.png",
                 },
                 {
-                    name: "Alex",
+                    name: "BB",
                     role: "Social media maverick",
                     avatar: "/avatar-4.png",
                 },
-                { name: "Amber", role: "Sales guru", avatar: "/avatar-5.png" },
+                { name: "CC", role: "Sales guru", avatar: "/avatar-5.png" },
             ],
         };
     },
 };
 </script>
-      
