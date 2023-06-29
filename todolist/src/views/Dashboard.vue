@@ -3,7 +3,7 @@
     <h1 class="subheading grey--text">Dashboard</h1>
 
     <!--这部分是点击ADD project之后的Popup弹窗-->
-    <v-dialog v-model="dialog" max-width="600px">
+    <v-dialog v-model="dialog" max-width="600px" @close="resetDialog">
       <v-card>
         <v-card-title>
           <h2>Add a New Project</h2>
@@ -47,7 +47,7 @@
     </v-dialog>
 
     <!-- 这部分是点击UPDATE project之后的Popup弹窗 -->
-    <v-dialog v-model="updateDialog" max-width="600px">
+    <v-dialog v-model="updateDialog" max-width="600px" @close="resetDialog">
       <v-card>
         <v-card-title>
           <h2>Update Project</h2>
@@ -82,7 +82,7 @@
               <v-date-picker v-model="updateDue"></v-date-picker>
             </v-menu>
 
-            <v-btn text class="primary mx-0 mt-3" @click="updateProject"
+            <v-btn text class="primary mx-0 mt-3" @click="postUpdateProject"
               >Update project</v-btn
             >
           </v-form>
@@ -207,7 +207,12 @@ export default {
       dialog: false,
       isDataLoaded: false,
       sortOrder: "asc", // 默认为升序排序
-       currentUpdatingProjectId: null,
+      currentUpdatingProjectId: null,
+      updateDialog: false,
+      updateTitle: "",
+      updatePerson: "",
+      updateContent: "",
+      updateDue: "",
     };
   },
   created() {
@@ -252,7 +257,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getProjects", "deleteProject", "addProject"]),
+    ...mapActions(["getProjects", "deleteProject", "addProject", "updateProject"]),
 
     projectStatus(dueDate) {
       const due = new Date(dueDate);
@@ -271,32 +276,40 @@ export default {
       }
     },
 
-    openDialog() {
-      (this.title = ""),
-        (this.content = ""),
-        (this.due = ""),
-        (this.test = true);
-      this.dialog = true;
+    resetDialog() {
+      this.title = "";
+      this.person = "";
+      this.content = "";
+      this.due = "";
       this.currentUpdatingProjectId = null;
+      this.updateDialog = false;
+      this.dialog = false;
+    },
+    openDialog() {
+      this.title = "";
+      this.content = "";
+      this.due = "";
+      this.test = true;
+      this.dialog = true;
     },
 
-      openUpdateDialog(id) {
-  // 查找要更新的项目
-  const project = this.projectsList.find(p => p._id === id);
+    //更新功能
+    openUpdateDialog(id) {
+      // 查找要更新的项目
+      const project = this.projectsList.find((p) => p._id === id);
 
-  // 将项目信息加载到表单中
-  this.title = project.title;
-  this.person = project.person;
-  this.content = project.content;
-  this.due = project.due;
+      // 将项目信息加载到表单中
+      this.updateTitle = project.title;
+      this.updatePerson = project.person;
+      this.updateContent = project.content;
+      const dueDate = new Date(project.due);
+  this.updateDue = dueDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      // 保存当前正在更新的项目的 ID
+      this.currentUpdatingProjectId = id;
 
-  // 保存当前正在更新的项目的 ID
-  this.currentUpdatingProjectId = id;
-
-  // 打开对话框
-  this.dialog = true;
-},
-
+      // 打开对话框
+      this.updateDialog = true;
+    },
 
     async postProject() {
       const formattedDueDate = new Date(this.due).toISOString().split("T")[0]; // 将日期格式化为年月日字符串
@@ -334,7 +347,22 @@ export default {
       }
     },
 
-
+    async postUpdateProject() {
+  const project = {
+    _id: this.currentUpdatingProjectId,
+    title: this.updateTitle,
+    person: this.updatePerson,
+    content: this.updateContent,
+    due: this.updateDue,
+  };
+  try {
+    await this.updateProject(project);
+    this.resetDialog();
+    this.getProjects();
+  } catch (error) {
+    console.error(error);
+  }
+},
 
     sortByProject(prop) {
       const defaultSortOrder = {

@@ -39,5 +39,15 @@ export default {
     }
   },
 
+  async updateProject({ commit }, project) {
+    try {
+      const response = await apiClient.put(`/api/todos/${project._id}`, project); // 使用 apiClient 调用 API
+      commit('updateProject', response.data); // 使用正确的 mutation 名称和参数
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+
 
 };
