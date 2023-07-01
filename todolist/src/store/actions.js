@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: process.env.VUE_APP_BASEAPI,
+  baseURL: process.env.VUE_APP_API_ENDPOINT,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json'
@@ -14,7 +14,7 @@ export default {
       const response = await apiClient.get('/api/todos'); // 使用 apiClient 调用 API
       const projects = response.data;
       commit('setProjects', projects); // 使用正确的 mutation 名称和参数
-      console.log('VUE_APP_BASEAPI:', process.env.VUE_APP_BASEAPI);
+      console.log('VUE_APP_API_ENDPOINT:', process.env.VUE_APP_API_ENDPOINT);
     console.log('Projects fetched from the server:', projects);
     } catch (error) {
       console.error(error);
