@@ -257,7 +257,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getProjects", "deleteProject", "addProject", "updateProject"]),
+    ...mapActions([
+      "getProjects",
+      "deleteProject",
+      "addProject",
+      "updateProject",
+    ]),
 
     projectStatus(dueDate) {
       const due = new Date(dueDate);
@@ -303,7 +308,10 @@ export default {
       this.updatePerson = project.person;
       this.updateContent = project.content;
       const dueDate = new Date(project.due);
-  this.updateDue = dueDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      const day = String(dueDate.getDate()).padStart(2, "0");
+      const month = String(dueDate.getMonth() + 1).padStart(2, "0"); //Months are zero based
+      const year = dueDate.getFullYear();
+      this.updateDue = `${year}-${month}-${day}`;
       // 保存当前正在更新的项目的 ID
       this.currentUpdatingProjectId = id;
 
@@ -348,21 +356,24 @@ export default {
     },
 
     async postUpdateProject() {
-  const project = {
-    _id: this.currentUpdatingProjectId,
-    title: this.updateTitle,
-    person: this.updatePerson,
-    content: this.updateContent,
-    due: this.updateDue,
-  };
-  try {
-    await this.updateProject(project);
-    this.resetDialog();
-    this.getProjects();
-  } catch (error) {
-    console.error(error);
-  }
-},
+      const formattedDueDate = new Date(this.updateDue)
+        .toISOString()
+        .split("T")[0];
+      const project = {
+        _id: this.currentUpdatingProjectId,
+        title: this.updateTitle,
+        person: this.updatePerson,
+        content: this.updateContent,
+        due: formattedDueDate,
+      };
+      try {
+        await this.updateProject(project);
+        this.resetDialog();
+        this.getProjects();
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
     sortByProject(prop) {
       const defaultSortOrder = {
