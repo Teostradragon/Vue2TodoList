@@ -165,6 +165,7 @@
               <div>{{ item.due | formatDate }}</div>
               <!-- 使用 formatDate 过滤器 -->
             </v-col>
+
             <v-col xs="2">
               <div>
                 <v-chip
@@ -181,6 +182,7 @@
             <v-btn depressed color="error" @click.stop="deleteProject(item._id)"
               >DELETE</v-btn
             >
+            <v-btn depressed color="success ">DONE</v-btn>
           </v-row>
           <v-row cols="12"> </v-row>
         </v-card>
