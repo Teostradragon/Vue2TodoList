@@ -25,7 +25,7 @@ export default {
         const dueDate = new Date(project.due);
         dueDate.setHours(0, 0, 0, 0); // 将项目的 'due' 日期也设置为午夜时间
 
-        if (project.completed) {
+        if (project.status === "Done") {
           completed++;
         } else if (dueDate < now) {
           overdue++;
@@ -76,10 +76,10 @@ export default {
                     return "#91cc75";
                   case "Future":
                     return "#73c0de";
-                    //3ba272
-                    //5470c6
-                    //91cc75 - 浅绿
-                    //5470c6 - 深蓝
+                  //3ba272
+                  //5470c6
+                  //91cc75 - 浅绿
+                  //5470c6 - 深蓝
                   default:
                     return "#fac858";
                 }

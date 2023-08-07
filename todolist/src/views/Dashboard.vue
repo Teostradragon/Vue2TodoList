@@ -169,20 +169,21 @@
             <v-col xs="2">
               <div>
                 <v-chip
-                  small
-                  :class="`${projectStatus(
-                    item.due
-                  )}-chip v-chip--active white--text caption my-2`"
-                >
-                  {{ projectStatus(item.due) }}
-                </v-chip>
+  small
+  :class="`${item.status === 'Done' ? 'completed' : projectStatus(item.due)}-chip v-chip--active white--text caption my-2`"
+>
+  {{ item.status === "Done" ? "Done" : projectStatus(item.due) }}
+</v-chip>
+
               </div>
             </v-col>
 
             <v-btn depressed color="error" @click.stop="deleteProject(item._id)"
               >DELETE</v-btn
             >
-            <v-btn depressed color="success ">DONE</v-btn>
+            <v-btn depressed color="success" @click.stop="markAsDone(item)"
+              >DONE</v-btn
+            >
           </v-row>
           <v-row cols="12"> </v-row>
         </v-card>
@@ -267,6 +268,7 @@ export default {
     ]),
 
     projectStatus(dueDate) {
+
       const due = new Date(dueDate);
       const now = new Date();
 
@@ -322,6 +324,7 @@ export default {
     },
 
     async postProject() {
+
       const formattedDueDate = new Date(this.due).toISOString().split("T")[0]; // 将日期格式化为年月日字符串
 
       const today = new Date();
@@ -376,6 +379,12 @@ export default {
         console.error(error);
       }
     },
+ markAsDone(project) {
+  this.$set(project, 'status', 'Done');
+  // Send a request to the backend to update the project's status
+  this.updateProject(project);
+},
+
 
     sortByProject(prop) {
       const defaultSortOrder = {
@@ -400,6 +409,9 @@ export default {
           return "ongoing";
         case "future":
           return "future";
+        case "Done":
+          return "completed";
+
         default:
           return "";
       }
@@ -419,5 +431,9 @@ export default {
 
 .overdue-chip {
   background: #f83e70;
+}
+
+.completed-chip {
+  background: #91cc75;
 }
 </style>

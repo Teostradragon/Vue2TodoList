@@ -6,12 +6,13 @@ export default {
   removeTodo: (state, id) =>
     (state.projectsList = state.projectsList.filter(todo => todo._id !== id)),
 
-  
+
     updateProject: (state, updatedProject) => {
       const index = state.projectsList.findIndex(project => project._id === updatedProject._id);
       if (index !== -1) {
-        state.projectsList.splice(index, 1, updatedProject);
+        this.$set(state.projectsList, index, updatedProject);
       }
-    },
+    }
+
 
 };
