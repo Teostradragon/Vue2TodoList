@@ -44,17 +44,8 @@ export default {
                     role: "Graphic designer",
                     avatar: "/avatar-2.png",
                 },
-                {
-                    name: "AA",
-                    role: "Web developer",
-                    avatar: "/avatar-3.png",
-                },
-                {
-                    name: "BB",
-                    role: "Social media maverick",
-                    avatar: "/avatar-4.png",
-                },
-                { name: "CC", role: "Sales guru", avatar: "/avatar-5.png" },
+                
+
             ],
         };
     },

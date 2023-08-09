@@ -177,13 +177,14 @@
 
               </div>
             </v-col>
+            <v-btn depressed color="success" @click.stop="markAsDone(item)"
+              >DONE</v-btn
+            >
 
             <v-btn depressed color="error" @click.stop="deleteProject(item._id)"
               >DELETE</v-btn
             >
-            <v-btn depressed color="success" @click.stop="markAsDone(item)"
-              >DONE</v-btn
-            >
+
           </v-row>
           <v-row cols="12"> </v-row>
         </v-card>
