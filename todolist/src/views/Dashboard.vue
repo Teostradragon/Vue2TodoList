@@ -102,20 +102,20 @@
               small
               text
               color="grey"
-              @click="sortByProject('title')"
+              @click="sortByProject('due')"
               v-on="on"
             >
-              <v-icon left small>mdi-folder</v-icon>
+              <v-icon left small>event</v-icon>
               <span right class="caption text-lowercase">
                 {{
-                  sortProp === "title" && sortOrder === "asc"
-                    ? "by projects name (A - Z)"
-                    : "by projects name (Z - A)"
+                  sortProp === "due" && sortOrder === "asc"
+                ? "by projects date (Old - New)"
+                : "by projects date (New - Old)"
                 }}
               </span>
             </v-btn>
           </template>
-          <span>Sorts projects by name</span>
+          <span>Sorts projects by date</span>
         </v-tooltip>
 
         <!-- 点击Sorts projects By person按照人名A - Z排列-->
@@ -171,6 +171,7 @@
                 <v-chip
   small
   :class="`${item.status === 'Done' ? 'completed' : projectStatus(item.due)}-chip v-chip--active white--text caption my-2`"
+  @click.stop="toggleStatus(item)"
 >
   {{ item.status === "Done" ? "Done" : projectStatus(item.due) }}
 </v-chip>
@@ -231,9 +232,11 @@ export default {
   },
 
   computed: {
+
+
     ...mapGetters(["projectsList"]), // 使用全局的 projectsList
     sortedProjects() {
-      const projects = [...this.projectsList]; // 创建一个新的数组副本，以避免修改原始数据
+     const projects = [...this.projectsList]; // 创建一个新的数组副本，以避免修改原始数据
       projects.sort((a, b) => {
         const propA = a[this.sortProp];
         const propB = b[this.sortProp];
@@ -252,7 +255,6 @@ export default {
       return projects;
     },
   },
-
   filters: {
     formatDate(date) {
       const options = { year: "numeric", month: "long", day: "numeric" };
@@ -261,6 +263,7 @@ export default {
   },
 
   methods: {
+  
     ...mapActions([
       "getProjects",
       "deleteProject",
